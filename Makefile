@@ -4,6 +4,7 @@ CFLAGS  := -pedantic -Wall -Wno-deprecated-declarations -Os
 LDFLAGS := -lX11
 
 SCRIPTS_DIR := scripts
+SCRIPTS := $(wildcard ${SCRIPTS_DIR}/*.sh)
 
 # FreeBSD (uncomment)
 #LDFLAGS += -L/usr/local/lib -I/usr/local/include
@@ -34,10 +35,11 @@ install: dwmblocks
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f dwmblocks ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwmblocks
-	chmod 755 scripts/*
-	cp ${SCRIPTS_DIR}/*.sh ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${SCRIPTS} 
+	cp -f $(SCRIPTS) ${DESTDIR}${PREFIX}/bin/
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwmblocks
+	rm -f $(patsubst ${SCRIPTS_DIR}/%,${DESTDIR}${PREFIX}/bin/%,${SCRIPTS})	
 
 .PHONY: all options clean install uninstall check_scripts
