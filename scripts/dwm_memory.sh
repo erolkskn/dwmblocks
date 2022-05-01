@@ -1,5 +1,5 @@
 #!/bin/sh
 
 ICON=""
-MEM_USAGE=$(free -h | awk '/^Mem/ { print $3"/"$2 }' | sed s/i//g)
+MEM_USAGE=$(free -m | awk '/^Mem/ { printf "%.1f/%.1fG", $3/1000, $2/1000 }' | sed s/i//g)
 printf "%s %s" "$ICON" "$MEM_USAGE"
